@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Countdown Timer</title>
+</head>
+<body>
+  <h1 id="countdown">10</h1>
+  <button id="startButton">Start</button>
+
+  <script>
+    // JavaScript Code
+
+    const countdownEl = document.getElementById('countdown');
+    const startButton = document.getElementById('startButton');
+
+    let timeLeft = 10; // Starting countdown value in seconds
+    let intervalId;
+
+    startButton.addEventListener('click', () => {
+      timeLeft = 10; // Reset time in case of multiple clicks
+      countdownEl.textContent = timeLeft;
+
+      // Clear any existing interval before starting a new one
+      clearInterval(intervalId);
+
+      // Set interval to update countdown every second
+      intervalId = setInterval(() => {
+        timeLeft--;
+        countdownEl.textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+          clearInterval(intervalId);
+          countdownEl.textContent = "Time's up!";
+        }
+      }, 1000);
+
+      // Optional: Use setTimeout to stop countdown after 10 seconds
+      setTimeout(() => {
+        clearInterval(intervalId);
+      }, 10000);
+    });
+
+  /*
+    const countdownDisplay = document.getElementById('countdown');
+    const startButton = document.getElementById('startButton');
+
+    let timeLeft = 10;
+
+    startButton.addEventListener('click', () => {
+        setInterval(() => {
+        if (timeLeft >= 0) {
+        countdownDisplay.textContent = timeLeft;
+        timeLeft--;
+        } else {
+        // Stop the countdown and display a message
+        }
+        }, 1000); 
+    });
+    */
+  </script>
+</body>
+</html>
+

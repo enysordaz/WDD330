@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pomodoro Timer</title>
+</head>
+<body>
+  <h1 id="timer">25:00</h1>
+  <button id="startButton">Start</button>
+  <h2 id="status">Work Time</h2>
+
+  <script>
+    const timerEl = document.getElementById('timer');
+    const startBtn = document.getElementById('startButton');
+    const statusEl = document.getElementById('status');
+
+    let workTime = 25 * 60; // 25 minutes in seconds
+    let breakTime = 5 * 60; // 5 minutes in seconds
+    let isWorking = true;
+    let intervalId;
+
+    function startTimer(duration) {
+      let timeLeft = duration;
+
+      clearInterval(intervalId); // prevent overlapping intervals
+
+      intervalId = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+
+        timerEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+        if (--timeLeft < 0) {
+          clearInterval(intervalId);
+          isWorking = !isWorking;
+          statusEl.textContent = isWorking ? "Work Time" : "Break Time";
+          const nextDuration = isWorking ? workTime : breakTime;
+          startTimer(nextDuration); // auto-switch between work and break
+        }
+      }, 1000);
+    }
+
+    startBtn.addEventListener('click', () => {
+      statusEl.textContent = "Work Time";
+      isWorking = true;
+      startTimer(workTime);
+    });
+  </script>
+</body>
+</html>
